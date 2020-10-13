@@ -12,7 +12,7 @@ namespace Projeto.UI.Utils
 {
     public class RequestApiAdvisor
     {
-        public static async Task<Previsao72> PostCallAPI(string url)
+        public static async Task<RequestForJson> PostCallAPI(string url)
         {
             try
             {
@@ -26,9 +26,10 @@ namespace Projeto.UI.Utils
                         var objetoSerializado = JsonConvert.DeserializeObject<ResponseApiAdvisor>(jsonString);
                         var diaComMaiorChuva = objetoSerializado.data.Where(x => x.rain.precipitation == objetoSerializado.data.Max(x => x.rain.precipitation)).FirstOrDefault();
 
-                        EscreverArquivo(diaComMaiorChuva);
+                        var jsonTxt = MontarJson(diaComMaiorChuva);
+                        EscreverArquivo(jsonTxt);
 
-                        return diaComMaiorChuva;
+                        return jsonTxt;
                     }
                 }
             }
@@ -39,9 +40,21 @@ namespace Projeto.UI.Utils
             return null;
         }
 
-        public static void EscreverArquivo(Previsao72 aux)
+        public static void EscreverArquivo(RequestForJson aux)
         {
-            File.WriteAllText(@"JsonPast\movie.json", JsonConvert.SerializeObject(aux));
+            File.WriteAllText(@"JsonPast\dadosRequest.json", JsonConvert.SerializeObject(aux));
+        }
+        public static RequestForJson MontarJson(Previsao72 prev)
+        {
+            return new RequestForJson
+            {
+                Acumulado = prev.rain.precipitation,
+                Ano = prev.date.Year,
+                Mes = prev.date.Month,
+                Dia = prev.date.Day,
+                Hora = prev.date.Hour,
+                Estacao = 1
+            };
         }
     }
 }
