@@ -13,7 +13,7 @@ namespace Projeto.UI.Utils
     {
         public static ResponsePredicao BuscarPred()
         {
-            var aux = File.ReadAllText(@"JsonPast\dadosResponse.json");
+            var aux = File.ReadAllText("dadosResponse.json");
             return JsonConvert.DeserializeObject<ResponsePredicao>(aux);
         }
     }

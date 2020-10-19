@@ -42,7 +42,7 @@ namespace Projeto.UI.Utils
 
         public static void EscreverArquivo(RequestForJson aux)
         {
-            File.WriteAllText(@"JsonPast\dadosRequest.json", JsonConvert.SerializeObject(aux));
+            File.WriteAllText("dadosRequest.json", JsonConvert.SerializeObject(aux));
         }
         public static RequestForJson MontarJson(Previsao72 prev)
         {
