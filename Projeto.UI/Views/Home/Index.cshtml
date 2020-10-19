@@ -1,12 +1,44 @@
-﻿@{
+﻿@model Projeto.UI.Models.ResponsePredicao
+@{
     ViewData["Title"] = "Home Page";
+    var classeCircl = "";
+    if (Model != null)
+    {
+        classeCircl = "p" + Math.Round(Model.Resultado);
+    }
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Predição De Enchentes</h1>
+    <p>Digite o CEP para calcular a porcentagem prevista para enchente na área.</p>
 </div>
-@if(ViewBag.Error != null)
+@if (ViewBag.Error != null)
 {
     <h2>@ViewBag.Error</h2>
 }
+@using (Html.BeginForm("BuscarPred", "Home", FormMethod.Post))
+{
+    <div class="text-center">
+        <input type="text" id="CEP" name="CEP" title="CEP" placeholder="CEP" />
+        <button>Calcular</button>
+    </div>
+}
+
+@if (Model != null)
+{
+    <hr />
+    <div class="text-center">
+        @Html.TextBoxFor(x => x.Dia, new { @readonly = "readonly"})
+    </div>
+
+    <hr />
+    <br />
+    <div class="c100 @classeCircl dark big center green">
+        <span>@Model.Resultado%</span>
+        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+    </div>
+    <br />
+
+}
+
+

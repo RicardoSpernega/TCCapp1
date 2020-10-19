@@ -23,23 +23,28 @@ namespace Projeto.UI.Controllers
 
         public async Task<IActionResult> Index()
         {
-
-            //ResponseApiAdvisor aux = await RequestApiAdvisor.PostCallAPI("http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3675/days/15?token=141bb85208a102d3278862261957739e");
-            RequestForJson aux = await RequestApiAdvisor.PostCallAPI("http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3675/hours/72?token=141bb85208a102d3278862261957739e");
-            if (aux == null)
-                ViewBag.Error = "Something wrong!";
             return View();
         }
         public async Task<JsonResult> ApiJosnResult()
         {
-            RequestForJson aux = await RequestApiAdvisor.PostCallAPI("http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3675/hours/72?token=141bb85208a102d3278862261957739e");
-            if (aux == null)
-                return Json("eroor");
-            return Json(aux);
+            RequestForJson response = await RequestApiAdvisor.PostCallAPI("http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3675/hours/72?token=141bb85208a102d3278862261957739e");
+            if (response == null)
+                return Json("error");
+            return Json(response);
         }
-        public IActionResult Privacy()
+        public async Task<IActionResult> BuscarPred(string cep)
         {
-            return View();
+            ResponsePredicao responsePredicao = new ResponsePredicao();
+            //ResponseApiAdvisor aux = await RequestApiAdvisor.PostCallAPI("http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3675/days/15?token=141bb85208a102d3278862261957739e");
+            RequestForJson response = await RequestApiAdvisor.PostCallAPI("http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3675/hours/72?token=141bb85208a102d3278862261957739e");
+            if (response == null)
+                ViewBag.Error = "Something wrong!";
+            else
+            {
+                responsePredicao = CalcularPorcentagem.BuscarPred();
+                responsePredicao.Dia = new DateTime(response.Ano, response.Mes, response.Dia);
+            }
+            return View("Index", responsePredicao);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -72,3 +72,4 @@ C:\www\TCC\ProjetoTCC.UI\Projeto.UI\obj\Debug\netcoreapp3.1\staticwebassets\Proj
 C:\www\TCC\ProjetoTCC.UI\Projeto.UI\obj\Debug\netcoreapp3.1\Projeto.UI.dll
 C:\www\TCC\ProjetoTCC.UI\Projeto.UI\obj\Debug\netcoreapp3.1\Projeto.UI.pdb
 C:\www\TCC\ProjetoTCC.UI\Projeto.UI\bin\Debug\netcoreapp3.1\JsonPast\dadosRequest.json
+C:\www\TCC\ProjetoTCC.UI\Projeto.UI\bin\Debug\netcoreapp3.1\JsonPast\dadosResponse.json
