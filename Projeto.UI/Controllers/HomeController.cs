@@ -32,17 +32,18 @@ namespace Projeto.UI.Controllers
                 return Json("error");
             return Json(response);
         }
-        public async Task<IActionResult> BuscarPred(string cep)
+        public async Task<IActionResult> BuscarPred(ResponsePredicao responsePredicao)
         {
-            ResponsePredicao responsePredicao = new ResponsePredicao();
             //ResponseApiAdvisor aux = await RequestApiAdvisor.PostCallAPI("http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3675/days/15?token=141bb85208a102d3278862261957739e");
             RequestForJson response = await RequestApiAdvisor.PostCallAPI("http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3675/hours/72?token=141bb85208a102d3278862261957739e");
             if (response == null)
                 ViewBag.Error = "Something wrong!";
             else
             {
-                responsePredicao = CalcularPorcentagem.BuscarPred();
+                var resposta = CalcularPorcentagem.BuscarPred();
                 responsePredicao.Dia = new DateTime(response.Ano, response.Mes, response.Dia);
+                responsePredicao.Dia.AddHours(response.Hora);
+                responsePredicao.Resultado = resposta.Resultado;
             }
             return View("Index", responsePredicao);
         }
